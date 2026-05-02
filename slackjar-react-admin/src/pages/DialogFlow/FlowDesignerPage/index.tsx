@@ -12,7 +12,7 @@ import {
     ZoomOutOutlined,
     FullscreenOutlined,
 } from '@ant-design/icons'
-import FlowDesigner from '../../../components/FlowDesigner'
+import FlowDesigner, {FlowDesignerRef} from '../../../components/FlowDesigner'
 import PreviewPanel from '../../../components/FlowDesigner/PreviewPanel'
 import {getFlowDetail, saveFlow, exportFlow} from '../../../apis/modules/dialogflow'
 import type {FlowData, FlowSaveRequest} from '../../../apis/modules/dialogflow'
@@ -27,6 +27,7 @@ const {TextArea} = Input
 const FlowDesignerPage: React.FC = () => {
     const params = useParams<{id: string}>()
     const navigate = useNavigate()
+    const flowDesignerRef = useRef<FlowDesignerRef>(null)
     const [loading, setLoading] = useState(false)
     const [flowName, setFlowName] = useState('新流程')
     const [flowDescription, setFlowDescription] = useState('')
@@ -59,6 +60,9 @@ const FlowDesignerPage: React.FC = () => {
                     setCurrentData(res.data.flowData)
                     setHistory([res.data.flowData])
                     setHistoryIndex(0)
+                    setTimeout(() => {
+                        flowDesignerRef.current?.fitView()
+                    }, 100)
                 }
             }
         } catch (error) {
@@ -81,9 +85,8 @@ const FlowDesignerPage: React.FC = () => {
                 newHistory.push(data)
                 if (newHistory.length > 50) {
                     newHistory.shift()
-                } else {
-                    setHistoryIndex(newHistory.length - 1)
                 }
+                setHistoryIndex(newHistory.length - 1)
                 return newHistory
             })
         },
@@ -94,7 +97,11 @@ const FlowDesignerPage: React.FC = () => {
         if (historyIndex > 0) {
             const newIndex = historyIndex - 1
             setHistoryIndex(newIndex)
-            setCurrentData(history[newIndex])
+            const targetData = history[newIndex]
+            setCurrentData(targetData)
+            if (flowDesignerRef.current && targetData) {
+                flowDesignerRef.current.setData(targetData)
+            }
         }
     }
 
@@ -102,7 +109,29 @@ const FlowDesignerPage: React.FC = () => {
         if (historyIndex < history.length - 1) {
             const newIndex = historyIndex + 1
             setHistoryIndex(newIndex)
-            setCurrentData(history[newIndex])
+            const targetData = history[newIndex]
+            setCurrentData(targetData)
+            if (flowDesignerRef.current && targetData) {
+                flowDesignerRef.current.setData(targetData)
+            }
+        }
+    }
+
+    const handleZoomIn = () => {
+        if (flowDesignerRef.current) {
+            flowDesignerRef.current.zoomIn()
+        }
+    }
+
+    const handleZoomOut = () => {
+        if (flowDesignerRef.current) {
+            flowDesignerRef.current.zoomOut()
+        }
+    }
+
+    const handleFitView = () => {
+        if (flowDesignerRef.current) {
+            flowDesignerRef.current.fitView()
         }
     }
 
@@ -111,7 +140,8 @@ const FlowDesignerPage: React.FC = () => {
             message.warning('请输入流程名称')
             return
         }
-        if (!currentData) {
+        const dataToSave = currentData || flowDesignerRef.current?.getData()
+        if (!dataToSave) {
             message.warning('没有可保存的数据')
             return
         }
@@ -120,7 +150,7 @@ const FlowDesignerPage: React.FC = () => {
             const request: FlowSaveRequest = {
                 name: flowName,
                 description: flowDescription,
-                flowData: JSON.stringify(currentData),
+                flowData: JSON.stringify(dataToSave),
                 status: 1,
             }
             if (flowId && flowId > 0) {
@@ -142,7 +172,8 @@ const FlowDesignerPage: React.FC = () => {
     }
 
     const handleExport = async () => {
-        if (!currentData) {
+        const dataToExport = currentData || flowDesignerRef.current?.getData()
+        if (!dataToExport) {
             message.warning('没有可导出的数据')
             return
         }
@@ -154,7 +185,7 @@ const FlowDesignerPage: React.FC = () => {
                     setShowExportModal(true)
                 }
             } else {
-                setExportJson(JSON.stringify(currentData, null, 2))
+                setExportJson(JSON.stringify(dataToExport, null, 2))
                 setShowExportModal(true)
             }
         } catch (error) {
@@ -174,7 +205,8 @@ const FlowDesignerPage: React.FC = () => {
     }
 
     const handlePreview = () => {
-        if (!currentData || currentData.nodes.length === 0) {
+        const dataToPreview = currentData || flowDesignerRef.current?.getData()
+        if (!dataToPreview || dataToPreview.nodes.length === 0) {
             message.warning('请先添加节点')
             return
         }
@@ -182,7 +214,7 @@ const FlowDesignerPage: React.FC = () => {
     }
 
     const handleBack = () => {
-        navigate('/dialogflow/list')
+        navigate('/dialogflow/flow-list')
     }
 
     const canUndo = historyIndex > 0
@@ -204,14 +236,14 @@ const FlowDesignerPage: React.FC = () => {
                 </div>
                 <div className={styles['toolbar-right']}>
                     <Space>
-                        <Tooltip title="撤销">
+                        <Tooltip title="撤销 (Ctrl+Z)">
                             <Button
                                 icon={<UndoOutlined/>}
                                 onClick={handleUndo}
                                 disabled={!canUndo}
                             />
                         </Tooltip>
-                        <Tooltip title="重做">
+                        <Tooltip title="重做 (Ctrl+Y)">
                             <Button
                                 icon={<RedoOutlined/>}
                                 onClick={handleRedo}
@@ -219,13 +251,22 @@ const FlowDesignerPage: React.FC = () => {
                             />
                         </Tooltip>
                         <Tooltip title="放大">
-                            <Button icon={<ZoomInOutlined/>}/>
+                            <Button
+                                icon={<ZoomInOutlined/>}
+                                onClick={handleZoomIn}
+                            />
                         </Tooltip>
                         <Tooltip title="缩小">
-                            <Button icon={<ZoomOutOutlined/>}/>
+                            <Button
+                                icon={<ZoomOutOutlined/>}
+                                onClick={handleZoomOut}
+                            />
                         </Tooltip>
                         <Tooltip title="适应画布">
-                            <Button icon={<FullscreenOutlined/>}/>
+                            <Button
+                                icon={<FullscreenOutlined/>}
+                                onClick={handleFitView}
+                            />
                         </Tooltip>
                     </Space>
                     <Divider type="vertical"/>
@@ -253,6 +294,7 @@ const FlowDesignerPage: React.FC = () => {
 
             <div className={styles['main-content']}>
                 <FlowDesigner
+                    ref={flowDesignerRef}
                     initialData={initialData || undefined}
                     onChange={handleDataChange}
                 />

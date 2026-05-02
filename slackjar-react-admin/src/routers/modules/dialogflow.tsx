@@ -15,7 +15,7 @@ const dialogflow: MenuRouteObject = {
             element: lazyLoad(lazy(() => import("../../pages/DialogFlow/FlowList")))
         },
         {
-            path: "designer/:id",
+            path: "designer/:id?",
             label: "menu.flow designer",
             icon: <BranchesOutlined/>,
             hidden: true,
