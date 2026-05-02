@@ -1,5 +1,5 @@
 import React from 'react'
-import {Handle, Position, NodeProps} from 'reactflow'
+import {Handle, Position, NodeProps} from '@xyflow/react'
 import {PlayCircleOutlined} from '@ant-design/icons'
 import styles from './nodes.module.scss'
 

@@ -1,4 +1,4 @@
-import {MessageOutlined, FlowOutlined} from "@ant-design/icons";
+import {MessageOutlined, BranchesOutlined} from "@ant-design/icons";
 import lazyLoad from "../lazyLoad";
 import React, {lazy} from "react";
 import {MenuRouteObject} from "../router";
@@ -11,13 +11,13 @@ const dialogflow: MenuRouteObject = {
         {
             path: "flow-list",
             label: "menu.flow list",
-            icon: <FlowOutlined/>,
+            icon: <BranchesOutlined/>,
             element: lazyLoad(lazy(() => import("../../pages/DialogFlow/FlowList")))
         },
         {
-            path: "designer/:id?",
+            path: "designer/:id",
             label: "menu.flow designer",
-            icon: <FlowOutlined/>,
+            icon: <BranchesOutlined/>,
             hidden: true,
             element: lazyLoad(lazy(() => import("../../pages/DialogFlow/FlowDesignerPage")))
         }

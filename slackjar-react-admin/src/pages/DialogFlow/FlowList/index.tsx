@@ -25,7 +25,7 @@ import styles from '../dialogflow.module.scss'
  * 对话流程列表页面
  */
 
-const {TextArea = InputAntd.TextArea
+const {TextArea} = InputAntd
 
 const FlowList: React.FC = () => {
     const navigate = useNavigate()

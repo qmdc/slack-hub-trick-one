@@ -1,5 +1,6 @@
 import React, {useCallback, useRef, useState, useMemo, useEffect} from 'react'
-import ReactFlow, {
+import {
+    ReactFlow,
     ReactFlowProvider,
     addEdge,
     useNodesState,
@@ -11,9 +12,9 @@ import ReactFlow, {
     Edge,
     Node,
     BackgroundVariant,
-} from 'reactflow'
+} from '@xyflow/react'
 import {nanoid} from 'nanoid'
-import 'reactflow/dist/style.css'
+import '@xyflow/react/dist/style.css'
 import NodePanel from './NodePanel'
 import PropertyPanel from './PropertyPanel'
 import StartNode from './CustomNodes/StartNode'
