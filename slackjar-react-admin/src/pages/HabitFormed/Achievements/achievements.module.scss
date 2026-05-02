@@ -1,0 +1,208 @@
+.achievements-page {
+    padding: 0;
+
+    .recent-card {
+        .recent-header {
+            h3 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1a1a1a;
+            }
+        }
+    }
+
+    .stat-card {
+        text-align: center;
+
+        .ant-statistic-title {
+            font-size: 14px;
+            color: #8c8c8c;
+            margin-bottom: 8px;
+        }
+
+        .ant-statistic-content {
+            font-size: 28px;
+            font-weight: 600;
+        }
+    }
+
+    .tabs-card {
+        .ant-tabs {
+            .ant-tabs-nav {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .achievements-grid {
+        padding: 8px 0;
+    }
+
+    .achievement-card {
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        overflow: hidden;
+
+        &.unlocked {
+            .card-inner {
+                opacity: 1;
+            }
+        }
+
+        &.locked {
+            .card-inner {
+                opacity: 0.8;
+            }
+
+            .achievement-icon-wrapper {
+                filter: grayscale(100%);
+            }
+        }
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .achievement-icon-wrapper {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+
+            .achievement-icon {
+                font-size: 36px;
+            }
+
+            .unlock-badge {
+                position: absolute;
+                top: -4px;
+                right: -4px;
+            }
+        }
+
+        .achievement-info {
+            width: 100%;
+
+            .achievement-name {
+                font-size: 16px;
+                font-weight: 600;
+                margin: 0 0 8px 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .achievement-desc {
+                font-size: 13px;
+                color: #8c8c8c;
+                margin: 0 0 12px 0;
+                line-height: 1.5;
+            }
+
+            .achievement-meta {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin-bottom: 8px;
+            }
+
+            .unlock-time {
+                font-size: 12px;
+                color: #bfbfbf;
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px dashed #f0f0f0;
+            }
+        }
+    }
+
+    .level-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: #fafafa;
+        border-radius: 8px;
+
+        .level-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+
+            &.level-bronze {
+                background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%);
+            }
+
+            &.level-silver {
+                background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+            }
+
+            &.level-gold {
+                background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+            }
+        }
+
+        .level-info {
+            h4 {
+                font-size: 15px;
+                font-weight: 600;
+                margin: 0 0 4px 0;
+                color: #1a1a1a;
+            }
+
+            p {
+                font-size: 13px;
+                color: #8c8c8c;
+                margin: 0 0 8px 0;
+            }
+        }
+    }
+
+    .type-card {
+        padding: 16px;
+        background: #fafafa;
+        border-radius: 8px;
+        text-align: center;
+
+        .type-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #1a1a1a;
+        }
+
+        p {
+            font-size: 13px;
+            color: #8c8c8c;
+            margin: 0 0 8px 0;
+            line-height: 1.5;
+        }
+    }
+}
