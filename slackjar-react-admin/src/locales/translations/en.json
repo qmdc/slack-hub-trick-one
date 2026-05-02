@@ -22,6 +22,18 @@
     "logged out": "Logout",
     "dialogflow": "Dialog Flow",
     "flow list": "Flow List",
-    "flow designer": "Flow Designer"
+    "flow designer": "Flow Designer",
+    "habit formed": "Habit Formed",
+    "habit home": "Home",
+    "habit goals": "Goals",
+    "habit friends": "Friends",
+    "habit statistics": "Statistics",
+    "habit achievements": "Achievements",
+    "accounting": "Accounting",
+    "quick bill": "Quick Bill",
+    "account list": "Accounts",
+    "transfer": "Transfer",
+    "budget": "Budget",
+    "statistics": "Analytics"
   }
 }

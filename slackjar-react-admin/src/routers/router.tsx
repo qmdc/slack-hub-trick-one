@@ -12,6 +12,7 @@ import front from "./front/front";
 import other from "./modules/other";
 import dialogflow from "./modules/dialogflow";
 import habitformed from "./modules/habitformed";
+import { accounting } from "./modules/accounting";
 
 
 /**
@@ -35,6 +36,7 @@ export declare type MenuRouteObject = {
 const portalRouters: MenuRouteObject[] = [
     {...welcome},      // 首页/欢迎页
     {...habitformed},  // 习惯养成社区
+    {...accounting},   // 家庭记账模块
     {...system},       // 系统设置模块
     {...dialogflow},   // 对话流程设计器
     {...other},        // 其他模块
