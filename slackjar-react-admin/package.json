@@ -28,7 +28,8 @@
     "socket.io-client": "^4.8.3",
     "sort-by": "^1.2.0",
     "vite-plugin-imp": "^2.4.0",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.8",
+    "reactflow": "^12.4.3"
   },
   "devDependencies": {
     "@types/react": "^19.2.5",

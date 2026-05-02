@@ -1,0 +1,148 @@
+/**
+ * 自定义节点样式
+ */
+
+.custom-node {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    min-width: 160px;
+    position: relative;
+
+    &.selected {
+        box-shadow: 0 0 0 2px #1890ff, 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .node-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 8px 8px 0 0;
+        color: #fff;
+
+        .node-icon {
+            font-size: 16px;
+        }
+
+        .node-title {
+            font-size: 13px;
+            font-weight: 500;
+        }
+    }
+
+    .node-body {
+        padding: 12px;
+        border: 1px solid #e8e8e8;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+
+        .node-label {
+            font-size: 12px;
+            color: #595959;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .node-options {
+            font-size: 11px;
+            color: #1890ff;
+            margin-top: 4px;
+        }
+
+        .node-card {
+            font-size: 11px;
+            color: #722ed1;
+            margin-top: 4px;
+        }
+
+        .condition-list {
+            margin-top: 8px;
+
+            .condition-item {
+                font-size: 11px;
+                color: #8c8c8c;
+                margin-top: 2px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    &.start-node {
+        .node-header {
+            background: #52c41a;
+        }
+    }
+
+    &.user-input-node {
+        .node-header {
+            background: #1890ff;
+        }
+    }
+
+    &.ai-reply-node {
+        .node-header {
+            background: #722ed1;
+        }
+    }
+
+    &.condition-node {
+        .node-header {
+            background: #fa8c16;
+        }
+    }
+
+    &.end-node {
+        .node-header {
+            background: #ff4d4f;
+        }
+    }
+}
+
+/**
+ * 连接点样式
+ */
+.handle-left {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 2px solid #1890ff;
+    left: -6px;
+
+    &:hover {
+        width: 16px;
+        height: 16px;
+        left: -8px;
+    }
+}
+
+.handle-right {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 2px solid #1890ff;
+    right: -6px;
+
+    &:hover {
+        width: 16px;
+        height: 16px;
+        right: -8px;
+    }
+}
+
+.handle-multiple {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border: 2px solid #fa8c16;
+    right: -5px;
+
+    &:hover {
+        width: 14px;
+        height: 14px;
+        right: -7px;
+    }
+}

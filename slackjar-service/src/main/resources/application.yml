@@ -9,7 +9,7 @@ spring:
       max-request-size: 200MB
 
 server:
-  port: 8024
+  port: 8026
   servlet:
     context-path: /slack
 

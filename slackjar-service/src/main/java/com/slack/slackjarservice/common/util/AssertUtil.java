@@ -81,6 +81,17 @@ public class AssertUtil {
     }
 
     /**
+     * 断言字符串不为空白，否则抛出业务异常
+     * @param str 字符串
+     * @param responseEnum 响应枚举
+     */
+    public static void notBlank(String str, ResponseEnum responseEnum) {
+        if (str == null || str.trim().isEmpty()) {
+            throw new BusinessException(responseEnum);
+        }
+    }
+
+    /**
      * 断言两个对象相等，否则抛出业务异常
      * @param obj1 对象1
      * @param obj2 对象2
