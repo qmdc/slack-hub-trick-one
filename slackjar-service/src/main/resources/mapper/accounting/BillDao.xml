@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slack.slackjarservice.accounting.dao.BillDao">
+
+    <select id="sumAmountByTimeRange" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(amount), 0) FROM bill
+        WHERE type = #{type}
+          AND bill_date &gt;= #{startTime}
+          AND bill_date &lt;= #{endTime}
+          AND deleted = 0
+    </select>
+
+    <select id="sumAmountByCategory" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(amount), 0) FROM bill
+        WHERE category_id = #{categoryId}
+          AND bill_date &gt;= #{startTime}
+          AND bill_date &lt;= #{endTime}
+          AND deleted = 0
+    </select>
+
+</mapper>

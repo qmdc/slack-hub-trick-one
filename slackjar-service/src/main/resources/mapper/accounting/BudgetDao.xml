@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slack.slackjarservice.accounting.dao.BudgetDao">
+
+    <select id="selectByPeriod" resultType="com.slack.slackjarservice.accounting.entity.Budget">
+        SELECT * FROM budget
+        WHERE period_type = #{periodType}
+          AND year = #{year}
+          <if test="month != null">AND month = #{month}</if>
+          AND deleted = 0
+        ORDER BY category_id ASC
+    </select>
+
+</mapper>

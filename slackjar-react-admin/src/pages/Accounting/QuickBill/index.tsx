@@ -31,7 +31,7 @@ const QuickBill: React.FC = () => {
   const handleSubmit = () => {
     form.validateFields().then((values) => {
       const billData: Bill = {
-        amount: values.amount,
+        amount: parseFloat(values.amount),
         type: billType,
         categoryId: values.categoryId,
         accountId: values.accountId,
@@ -74,9 +74,21 @@ const QuickBill: React.FC = () => {
         <Form.Item
           label="金额"
           name="amount"
-          rules={[{ required: true, message: '请输入金额' }, { type: 'number', min: 0.01, message: '金额必须大于0' }]}
+          rules={[
+            { required: true, message: '请输入金额' },
+            { pattern: /^\d+(\.\d{1,2})?$/, message: '请输入有效的金额格式（最多两位小数）' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                const numValue = parseFloat(value);
+                if (numValue <= 0) {
+                  return Promise.reject(new Error('金额必须大于0'));
+                }
+                return Promise.resolve();
+              },
+            }),
+          ]}
         >
-          <Input type="number" placeholder="请输入金额" className="amount-input" />
+          <Input type="string" placeholder="请输入金额" className="amount-input" />
         </Form.Item>
 
         <Form.Item
