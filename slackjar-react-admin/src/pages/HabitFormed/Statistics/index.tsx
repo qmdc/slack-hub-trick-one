@@ -11,10 +11,7 @@ import {
     PieChartOutlined,
 } from '@ant-design/icons'
 import {
-    getStatisticsOverview,
-    getWeeklyStatistics,
-    getMonthlyStatistics,
-    getGoalStatistics,
+    getStatistics,
 } from '../../../apis'
 import type {
     HabitStatisticsResponse,
@@ -44,27 +41,35 @@ const Statistics: React.FC = () => {
     const fetchData = useCallback(async () => {
         setLoading(true)
         try {
-            const [overviewRes, weeklyRes, monthlyRes, goalsRes] = await Promise.all([
-                getStatisticsOverview(),
-                getWeeklyStatistics(),
-                getMonthlyStatistics({
-                    year: parseInt(selectedYear),
-                    month: selectedMonth ? parseInt(selectedMonth) : undefined,
-                }),
-                getGoalStatistics(),
-            ])
-
-            if (overviewRes?.code === 200) {
-                setOverview(overviewRes.data)
-            }
-            if (weeklyRes?.code === 200) {
-                setWeeklyData(weeklyRes.data || [])
-            }
-            if (monthlyRes?.code === 200) {
-                setMonthlyData(monthlyRes.data || [])
-            }
-            if (goalsRes?.code === 200) {
-                setGoalsData(goalsRes.data || [])
+            const res = await getStatistics()
+            if (res?.code === 200) {
+                const data = res.data
+                setOverview(data)
+                
+                const weeklyDataArray = Object.entries(data.weeklyCheckinData || {}).map(([date, completionRate]) => ({
+                    date,
+                    completionRate: Number(completionRate)
+                }))
+                setWeeklyData(weeklyDataArray)
+                
+                const monthlyDataArray = Object.entries(data.monthlyCheckinData || {}).map(([month, completionRate]) => ({
+                    month: month.replace(/^\d{4}-/, ''),
+                    completionRate: Number(completionRate),
+                    checkinDays: 0,
+                    maxStreak: 0
+                }))
+                setMonthlyData(monthlyDataArray)
+                
+                const goalsArray = data.goalCompletions?.map(g => ({
+                    ...g,
+                    id: g.goalId,
+                    goalName: g.goalName,
+                    goalIcon: g.goalIcon,
+                    totalDays: g.totalDays,
+                    checkinCount: g.checkinCount,
+                    completionRate: g.completionRate
+                })) || []
+                setGoalsData(goalsArray)
             }
         } catch (error) {
             console.error(error)
@@ -266,7 +271,7 @@ const Statistics: React.FC = () => {
                                     {Array.from({length: 7}, (_, i) => i + 1).map((val) => (
                                         <div key={val} className={styles['grid-line']}>
                                             <span className={styles['grid-label']}>{val * 15}%</span>
-                                            <div className={styles['grid-line-inner']/>
+                                            <div className={styles['grid-line-inner']}></div>
                                         </div>
                                     ))}
                                 </div>
@@ -280,11 +285,11 @@ const Statistics: React.FC = () => {
                                     {weeklyData.length > 1 && (
                                         <>
                                             <polygon
-                                                points={weeklyData
+                                                points={`${weeklyData
                                                     .map((item, index) =>
                                                         `${(index / (weeklyData.length - 1 || 1)) * 400},${200 - (item.completionRate || 0) * 2}`
                                                     )
-                                                    .join(' ')} ${(weeklyData.length - 1) * 400 / Math.max(weeklyData.length - 1, 1)},200 0,200 Z
+                                                    .join(' ')} ${(weeklyData.length - 1) * 400 / Math.max(weeklyData.length - 1, 1)},200 0,200 Z`}
                                                 fill="url(#trendGradient)"
                                             />
                                             <polyline

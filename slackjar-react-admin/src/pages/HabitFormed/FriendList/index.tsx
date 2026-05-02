@@ -37,7 +37,7 @@ import {
     sendFriendRequest,
     confirmFriendRequest,
     rejectFriendRequest,
-    checkFriendship,
+    isFriend,
 } from '../../../apis'
 import type {HabitFriendResponse, HabitFriendshipPageQuery} from '../../../apis'
 import styles from './friendlist.module.scss'
