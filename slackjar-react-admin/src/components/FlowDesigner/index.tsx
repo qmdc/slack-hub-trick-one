@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState, useMemo, useEffect} from 'react'
+import React, {useCallback, useRef, useState, useMemo, useEffect, forwardRef, useImperativeHandle} from 'react'
 import {
     ReactFlow,
     ReactFlowProvider,
@@ -12,6 +12,7 @@ import {
     Edge,
     Node,
     BackgroundVariant,
+    useReactFlow,
 } from '@xyflow/react'
 import {nanoid} from 'nanoid'
 import '@xyflow/react/dist/style.css'
@@ -29,6 +30,14 @@ import styles from './flowDesigner.module.scss'
  * 流程设计器主组件
  * 提供可视化的节点拖拽、连线、配置功能
  */
+
+export interface FlowDesignerRef {
+    zoomIn: () => void
+    zoomOut: () => void
+    fitView: () => void
+    setData: (data: FlowData) => void
+    getData: () => FlowData
+}
 
 interface FlowDesignerProps {
     initialData?: FlowData
@@ -52,14 +61,15 @@ const nodeDefaultLabels: Record<string, string> = {
     end: '结束',
 }
 
-const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange}) => {
+const FlowDesignerContent = forwardRef<FlowDesignerRef, FlowDesignerProps>(({initialData, onChange}, ref) => {
     const reactFlowWrapper = useRef<HTMLDivElement>(null)
-    const [reactFlowInstance, setReactFlowInstance] = useState<any>(null)
+    const {zoomIn, zoomOut, fitView: rfFitView, setViewport} = useReactFlow()
     const [selectedNode, setSelectedNode] = useState<Node | null>(null)
+    const isInitialized = useRef(false)
 
-    const initialNodes = useMemo(() => {
-        if (initialData?.nodes?.length) {
-            return initialData.nodes.map((node) => ({
+    const getInitialNodes = useCallback((data?: FlowData): Node[] => {
+        if (data?.nodes?.length) {
+            return data.nodes.map((node) => ({
                 id: node.id,
                 type: node.type,
                 position: node.position,
@@ -74,20 +84,26 @@ const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange
                 data: {label: '开始'},
             },
         ]
-    }, [initialData])
+    }, [])
 
-    const initialEdges = useMemo(() => {
-        if (initialData?.edges?.length) {
-            return initialData.edges.map((edge) => ({
+    const getInitialEdges = useCallback((data?: FlowData): Edge[] => {
+        if (data?.edges?.length) {
+            return data.edges.map((edge) => ({
                 ...edge,
                 animated: true,
             })) as Edge[]
         }
         return []
-    }, [initialData])
+    }, [])
 
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+    const [nodes, setNodes, onNodesChange] = useNodesState(getInitialNodes(initialData))
+    const [edges, setEdges, onEdgesChange] = useEdgesState(getInitialEdges(initialData))
+
+    useEffect(() => {
+        if (initialData && !isInitialized.current) {
+            isInitialized.current = true
+        }
+    }, [initialData])
 
     useEffect(() => {
         if (onChange) {
@@ -110,6 +126,38 @@ const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange
             onChange(flowData)
         }
     }, [nodes, edges, onChange])
+
+    useImperativeHandle(ref, () => ({
+        zoomIn: () => {
+            zoomIn({duration: 300})
+        },
+        zoomOut: () => {
+            zoomOut({duration: 300})
+        },
+        fitView: () => {
+            rfFitView({duration: 300, padding: 0.2})
+        },
+        setData: (data: FlowData) => {
+            setNodes(getInitialNodes(data))
+            setEdges(getInitialEdges(data))
+        },
+        getData: (): FlowData => ({
+            nodes: nodes.map((node) => ({
+                id: node.id,
+                type: node.type || 'default',
+                position: node.position,
+                data: node.data,
+            })) as FlowNode[],
+            edges: edges.map((edge) => ({
+                id: edge.id,
+                source: edge.source,
+                target: edge.target,
+                sourceHandle: edge.sourceHandle,
+                targetHandle: edge.targetHandle,
+                animated: edge.animated,
+            })),
+        }),
+    }), [zoomIn, zoomOut, rfFitView, setNodes, setEdges, getInitialNodes, getInitialEdges, nodes, edges])
 
     const onConnect = useCallback(
         (params: Connection) => {
@@ -144,10 +192,13 @@ const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange
                 return
             }
 
-            const position = reactFlowInstance.screenToFlowPosition({
-                x: event.clientX,
-                y: event.clientY,
-            })
+            const bounds = reactFlowWrapper.current?.getBoundingClientRect()
+            if (!bounds) return
+
+            const position = {
+                x: event.clientX - bounds.left,
+                y: event.clientY - bounds.top,
+            }
 
             const newNode: Node = {
                 id: `${nodeType}_${nanoid(8)}`,
@@ -158,7 +209,7 @@ const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange
 
             setNodes((nds) => nds.concat(newNode))
         },
-        [reactFlowInstance, setNodes]
+        [setNodes]
     )
 
     const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
@@ -199,7 +250,6 @@ const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}
-                    onInit={setReactFlowInstance}
                     onDrop={onDrop}
                     onDragOver={onDragOver}
                     onNodeClick={onNodeClick}
@@ -236,9 +286,11 @@ const FlowDesignerContent: React.FC<FlowDesignerProps> = ({initialData, onChange
             />
         </div>
     )
-}
+})
 
-const FlowDesigner: React.FC<FlowDesignerProps> = (props) => {
+FlowDesignerContent.displayName = 'FlowDesignerContent'
+
+const FlowDesigner: React.FC<FlowDesignerProps & {ref?: React.Ref<FlowDesignerRef>}> = (props) => {
     return (
         <ReactFlowProvider>
             <FlowDesignerContent {...props}/>
@@ -246,4 +298,10 @@ const FlowDesigner: React.FC<FlowDesignerProps> = (props) => {
     )
 }
 
-export default FlowDesigner
+export default forwardRef<FlowDesignerRef, FlowDesignerProps>((props, ref) => {
+    return (
+        <ReactFlowProvider>
+            <FlowDesignerContent {...props} ref={ref}/>
+        </ReactFlowProvider>
+    )
+})
