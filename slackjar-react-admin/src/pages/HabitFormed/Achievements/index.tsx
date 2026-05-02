@@ -10,9 +10,9 @@ import {
     TeamOutlined,
 } from '@ant-design/icons'
 import {
-    getAchievementList,
-    getUnlockedAchievements,
-    getRecentUnlocked,
+    getAllAchievements,
+    getUserAchievements,
+    getRecentAchievement,
 } from '../../../apis'
 import type {HabitAchievementResponse} from '../../../apis'
 import styles from './achievements.module.scss'
@@ -30,9 +30,9 @@ const Achievements: React.FC = () => {
         setLoading(true)
         try {
             const [allRes, unlockedRes, recentRes] = await Promise.all([
-                getAchievementList(),
-                getUnlockedAchievements(),
-                getRecentUnlocked(),
+                getAllAchievements(),
+                getUserAchievements(),
+                getRecentAchievement(),
             ])
 
             if (allRes?.code === 200) {

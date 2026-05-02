@@ -315,6 +315,18 @@ export interface MonthlyRate {
     checkinDays: number
 }
 
+export interface WeeklyData {
+    date: string
+    completionRate: number
+}
+
+export interface MonthlyData {
+    month: string
+    completionRate: number
+    checkinDays: number
+    maxStreak: number
+}
+
 /**
  * 打卡目标响应
  */
