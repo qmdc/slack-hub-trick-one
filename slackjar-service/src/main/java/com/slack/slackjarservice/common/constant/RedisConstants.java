@@ -32,12 +32,24 @@ public class RedisConstants {
 
     public static final int DEFAULT_EXPIRE = 24 * 60 * 60;
 
+    public static final int ONE_HOUR = 60 * 60;
+
+    public static final int ONE_DAY = 24 * 60 * 60;
+
     public static final int WEEK_EXPIRE = 7 * 24 * 60 * 60;
 
     public static final int MONTH_EXPIRE = 30 * 24 * 60 * 60;
 
     public static String getCheckinTodayKey(Long userId) {
         return HABIT_CHECKIN_TODAY + userId;
+    }
+
+    public static String getTodayCheckinKey(Long userId) {
+        return getCheckinTodayKey(userId);
+    }
+
+    public static String getUserLikesKey(Long userId) {
+        return HABIT_PREFIX + "user:likes:" + userId;
     }
 
     public static String getCheckinStatusKey(Long userId, Long goalId) {

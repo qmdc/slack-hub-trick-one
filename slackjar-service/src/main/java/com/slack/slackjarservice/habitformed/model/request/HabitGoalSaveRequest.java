@@ -67,4 +67,14 @@ public class HabitGoalSaveRequest {
      * 结束日期
      */
     private Long endDate;
+
+    /**
+     * 状态：0-停用，1-进行中，2-已完成
+     */
+    private Integer status;
+
+    /**
+     * 可见性：0-私密，1-好友可见，2-公开
+     */
+    private Integer visibility;
 }

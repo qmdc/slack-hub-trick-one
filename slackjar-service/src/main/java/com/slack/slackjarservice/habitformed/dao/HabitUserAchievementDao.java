@@ -1,8 +1,8 @@
 package com.slack.slackjarservice.habitformed.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 import com.slack.slackjarservice.habitformed.entity.HabitUserAchievement;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 用户成就表(HabitUserAchievement)表数据库访问层
@@ -12,5 +12,4 @@ import com.slack.slackjarservice.habitformed.entity.HabitUserAchievement;
  */
 @Mapper
 public interface HabitUserAchievementDao extends BaseMapper<HabitUserAchievement> {
-
 }
