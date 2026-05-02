@@ -195,7 +195,7 @@ const BudgetManagement: React.FC = () => {
 
       <Modal
         title={editingBudget ? '编辑预算' : '新建预算'}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >

@@ -142,7 +142,7 @@ const AccountList: React.FC = () => {
 
       <Modal
         title={editingAccount ? '编辑账户' : '新建账户'}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
