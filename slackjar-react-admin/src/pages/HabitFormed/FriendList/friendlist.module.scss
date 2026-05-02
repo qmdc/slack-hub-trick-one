@@ -1,0 +1,129 @@
+.friend-list-page {
+    padding: 0;
+
+    .mini-stat-card {
+        text-align: center;
+        padding: 12px;
+
+        .ant-statistic-title {
+            font-size: 12px;
+            color: #8c8c8c;
+            margin-bottom: 4px;
+        }
+
+        .ant-statistic-content {
+            font-size: 24px;
+            font-weight: 600;
+        }
+    }
+
+    .search-section {
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-result-card {
+        .friend-item {
+            padding: 16px 0;
+        }
+    }
+
+    .tabs-card {
+        .ant-tabs {
+            .ant-tabs-nav {
+                margin-bottom: 0;
+            }
+        }
+
+        .friend-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .friend-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                .friend-name {
+                    font-weight: 600;
+                    font-size: 15px;
+                    color: #1a1a1a;
+                }
+            }
+
+            .friend-stats {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin-top: 8px;
+
+                .last-checkin {
+                    font-size: 12px;
+                    color: #8c8c8c;
+                }
+            }
+        }
+    }
+
+    .user-detail {
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #f0f0f0;
+
+            .user-info {
+                .user-name {
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin: 0 0 4px 0;
+                }
+
+                .user-username {
+                    font-size: 14px;
+                    color: #8c8c8c;
+                    margin: 0 0 8px 0;
+                }
+            }
+        }
+
+        .user-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 24px;
+
+            .stat-item {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+
+                .stat-value {
+                    font-size: 24px;
+                    font-weight: 600;
+                    margin: 0;
+                    color: #1a1a1a;
+                }
+
+                .stat-label {
+                    font-size: 12px;
+                    color: #8c8c8c;
+                    margin: 0;
+                }
+            }
+        }
+
+        .user-action {
+            text-align: center;
+        }
+    }
+}
