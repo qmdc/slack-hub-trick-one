@@ -56,7 +56,8 @@ public class HabitGoalServiceImpl extends ServiceImpl<HabitGoalDao, HabitGoal> i
         goal.setGoalIcon(request.getGoalIcon());
         goal.setGoalColor(request.getGoalColor());
         goal.setDescription(request.getDescription());
-        goal.setStatus(Objects.nonNull(request.getStatus()) ? request.getStatus() : 1);
+        // 注意：HabitGoalSaveRequest中没有status字段，使用默认值或从其他地方获取
+        // goal.setStatus(Objects.nonNull(request.getStatus()) ? request.getStatus() : 1);
 
         this.saveOrUpdate(goal);
 
@@ -267,10 +268,10 @@ public class HabitGoalServiceImpl extends ServiceImpl<HabitGoalDao, HabitGoal> i
         response.setCreateTime(goal.getCreateTime());
 
         if (goal.getTotalDays() != null && goal.getTotalDays() > 0 && goal.getCheckinCount() != null) {
-            int rate = (int) ((goal.getCheckinCount() * 100.0) / goal.getTotalDays());
-            response.setCompletionRate(Math.min(100, rate));
+            double rate = (goal.getCheckinCount() * 100.0) / goal.getTotalDays();
+            response.setCompletionRate(Math.min(100.0, rate));
         } else {
-            response.setCompletionRate(0);
+            response.setCompletionRate(0.0);
         }
 
         return response;

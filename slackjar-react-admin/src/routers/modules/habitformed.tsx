@@ -1,4 +1,4 @@
-import {HomeOutlined, TargetOutlined, TeamOutlined, BarChartOutlined, TrophyOutlined} from "@ant-design/icons";
+import {HomeOutlined, AimOutlined, TeamOutlined, BarChartOutlined, TrophyOutlined} from "@ant-design/icons";
 import lazyLoad from "../lazyLoad";
 import React, {lazy} from "react";
 import {MenuRouteObject} from "../router";
@@ -6,7 +6,7 @@ import {MenuRouteObject} from "../router";
 const habitformed: MenuRouteObject = {
     path: "habit",
     label: "menu.habit formed",
-    icon: <TargetOutlined/>,
+    icon: <AimOutlined/>,
     children: [
         {
             path: "home",
@@ -17,7 +17,7 @@ const habitformed: MenuRouteObject = {
         {
             path: "goals",
             label: "menu.habit goals",
-            icon: <TargetOutlined/>,
+            icon: <AimOutlined/>,
             element: lazyLoad(lazy(() => import("../../pages/HabitFormed/GoalList")))
         },
         {
