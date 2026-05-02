@@ -19,6 +19,9 @@
     "page 404": "404 页面",
     "other": "其他",
     "personal center": "个人中心",
-    "logged out": "退出登录"
+    "logged out": "退出登录",
+    "dialogflow": "对话流程设计",
+    "flow list": "流程列表",
+    "flow designer": "流程设计器"
   }
 }

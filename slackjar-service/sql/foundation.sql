@@ -1,4 +1,4 @@
-create table slack_trick_one.sys_user
+create table slackjar_trick_one.sys_user
 (
     id              bigint auto_increment comment '用户ID'
         primary key,
@@ -19,7 +19,7 @@ create table slack_trick_one.sys_user
 )
     comment '系统用户表';
 
-    create table slack_trick_one.role
+    create table slackjar_trick_one.role
 (
     id          bigint auto_increment comment '角色ID'
         primary key,
@@ -36,7 +36,7 @@ create table slack_trick_one.sys_user
 )
     comment '角色信息表，存储系统中所有角色定义';
 
-create table slack_trick_one.user_role
+create table slackjar_trick_one.user_role
 (
     id          bigint auto_increment comment '关联记录ID'
         primary key,
@@ -49,7 +49,7 @@ create table slack_trick_one.user_role
 )
     comment '用户与角色的关联表，维护多对多关系';
 
-create table slack_trick_one.permission
+create table slackjar_trick_one.permission
 (
     id               bigint auto_increment comment '权限ID'
         primary key,
@@ -66,7 +66,7 @@ create table slack_trick_one.permission
 )
     comment '权限信息表，存储系统中所有权限定义';
 
-create table slack_trick_one.role_permission
+create table slackjar_trick_one.role_permission
 (
     id            bigint auto_increment comment '关联记录ID'
         primary key,
@@ -79,7 +79,7 @@ create table slack_trick_one.role_permission
 )
     comment '角色与权限的关联表，维护多对多关系';
 
-create table slack_trick_one.sys_file
+create table slackjar_trick_one.sys_file
 (
     id             bigint auto_increment comment '文件ID'
         primary key,
@@ -104,7 +104,7 @@ create table slack_trick_one.sys_file
 )
     comment '系统文件表';
 
-create table slack_trick_one.ssl_certificate
+create table slackjar_trick_one.ssl_certificate
 (
     id            bigint auto_increment comment '主键ID'
         primary key,
@@ -123,7 +123,7 @@ create table slack_trick_one.ssl_certificate
 )
     comment 'SSL证书信息表';
 
-create table slack_trick_one.sys_config
+create table slackjar_trick_one.sys_config
 (
     id           bigint auto_increment comment '主键ID'
         primary key,
@@ -139,7 +139,7 @@ create table slack_trick_one.sys_config
 )
     comment '系统参数配置表';
 
-create table slack_trick_one.sys_dict
+create table slackjar_trick_one.sys_dict
 (
     id          bigint auto_increment comment '字典ID'
         primary key,
@@ -155,7 +155,7 @@ create table slack_trick_one.sys_dict
 )
     comment '数据字典表，存储字典类型定义';
 
-create table slack_trick_one.sys_dict_item
+create table slackjar_trick_one.sys_dict_item
 (
     id          bigint auto_increment comment '字典项ID'
         primary key,
@@ -173,7 +173,7 @@ create table slack_trick_one.sys_dict_item
     comment '数据字典项表，存储字典项定义';
 
 -- 用户设备登录记录表
-create table slack_trick_one.user_device (
+create table slackjar_trick_one.user_device (
     `id` BIGINT PRIMARY KEY AUTO_INCREMENT comment '主键ID',
     `user_id` BIGINT NOT NULL comment '用户ID',
     `token_value` VARCHAR(255) NOT NULL comment 'Sa-Token 的 token 值',

@@ -19,6 +19,9 @@
     "page 404": "404 Page",
     "other": "Other",
     "personal center": "Personal Center",
-    "logged out": "Logout"
+    "logged out": "Logout",
+    "dialogflow": "Dialog Flow",
+    "flow list": "Flow List",
+    "flow designer": "Flow Designer"
   }
 }
