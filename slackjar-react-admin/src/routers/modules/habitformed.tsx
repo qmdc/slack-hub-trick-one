@@ -7,6 +7,7 @@ const habitformed: MenuRouteObject = {
     path: "habit",
     label: "menu.habit formed",
     icon: <AimOutlined/>,
+    hidden: true,
     children: [
         {
             path: "home",

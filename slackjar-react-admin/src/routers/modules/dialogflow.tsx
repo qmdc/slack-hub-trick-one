@@ -7,6 +7,7 @@ const dialogflow: MenuRouteObject = {
     path: "dialogflow",
     label: "menu.dialogflow",
     icon: <MessageOutlined/>,
+    hidden: true,
     children: [
         {
             path: "flow-list",
