@@ -13,6 +13,7 @@ import other from "./modules/other";
 import dialogflow from "./modules/dialogflow";
 import habitformed from "./modules/habitformed";
 import { accounting } from "./modules/accounting";
+import passwordManager from "./modules/passwordmanager";
 
 
 /**
@@ -34,12 +35,13 @@ export declare type MenuRouteObject = {
  * 这些路由会被包裹在 CheckLogin 组件中，未登录会跳转到登录页
  */
 const portalRouters: MenuRouteObject[] = [
-    {...welcome},      // 首页/欢迎页
-    {...habitformed},  // 习惯养成社区
-    {...accounting},   // 家庭记账模块
-    {...system},       // 系统设置模块
-    {...dialogflow},   // 对话流程设计器
-    {...other},        // 其他模块
+    {...welcome},         // 首页/欢迎页
+    {...habitformed},     // 习惯养成社区
+    {...accounting},      // 家庭记账模块
+    {...passwordManager}, // 密码管理器
+    {...system},          // 系统设置模块
+    {...dialogflow},      // 对话流程设计器
+    {...other},           // 其他模块
 ]
 
 /**

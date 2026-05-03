@@ -34,6 +34,8 @@
     "account list": "账户管理",
     "transfer": "账户转账",
     "budget": "预算管理",
-    "statistics": "统计分析"
+    "statistics": "统计分析",
+    "password manager": "密码管理器",
+    "password list": "密码列表"
   }
 }

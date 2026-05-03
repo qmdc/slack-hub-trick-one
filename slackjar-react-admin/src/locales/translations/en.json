@@ -34,6 +34,8 @@
     "account list": "Accounts",
     "transfer": "Transfer",
     "budget": "Budget",
-    "statistics": "Analytics"
+    "statistics": "Analytics",
+    "password manager": "Password Manager",
+    "password list": "Password List"
   }
 }
