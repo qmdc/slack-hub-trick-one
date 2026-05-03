@@ -179,7 +179,7 @@ const QuoteList: React.FC = () => {
     setIsImageModalVisible(true);
   };
 
-  const generateImage = () => {
+  const renderImagePreview = () => {
     if (!canvasRef.current || !editingItem) return;
     
     const canvas = canvasRef.current;
@@ -236,10 +236,20 @@ const QuoteList: React.FC = () => {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
       ctx.fillText(`—— ${editingItem.author}`, canvas.width / 2, startY + lines.length * lineHeight + 40);
     }
+  };
 
+  useEffect(() => {
+    if (isImageModalVisible && editingItem) {
+      renderImagePreview();
+    }
+  }, [isImageModalVisible, editingItem]);
+
+  const generateImage = () => {
+    if (!canvasRef.current || !editingItem) return;
+    
     const link = document.createElement('a');
     link.download = `quote_${editingItem.id}.png`;
-    link.href = canvas.toDataURL('image/png');
+    link.href = canvasRef.current.toDataURL('image/png');
     link.click();
     message.success('图片已保存');
   };
