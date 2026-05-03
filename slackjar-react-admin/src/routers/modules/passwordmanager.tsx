@@ -7,6 +7,7 @@ const passwordManager: MenuRouteObject = {
     path: "password-manager",
     label: "menu.password manager",
     icon: <KeyOutlined/>,
+    hidden: true,
     children: [
         {
             path: "password-list",
