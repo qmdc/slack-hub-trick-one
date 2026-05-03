@@ -364,7 +364,7 @@ const PasswordList: React.FC = () => {
           </Form.Item>
           <Form.Item name="generatedPassword" label="生成的密码">
             <Input.Group>
-              <Input disabled className="font-mono" />
+              <Input disabled className="font-mono" name="generatedPassword" />
               <Button icon={<CopyOutlined />} onClick={() => {
                 const password = generateForm.getFieldValue('generatedPassword');
                 if (password) {

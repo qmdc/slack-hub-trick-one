@@ -2,7 +2,10 @@ import request from '../request'
 import type {ResponseData} from './types'
 
 export function getPasswordList(category?: string): Promise<ResponseData<PasswordEntryDTO[]>> {
-    return request.get('/password-entry/list', {params: {category}})
+    return request.get('/password-entry/list', {params:
+            {category}
+    }
+    )
 }
 
 export function searchPasswords(keyword: string): Promise<ResponseData<PasswordEntryDTO[]>> {
