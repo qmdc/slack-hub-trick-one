@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/quote-categories")
+@RequestMapping("/quote-categories")
 public class QuoteCategoryController extends BaseController {
 
     private final QuoteCategoryService quoteCategoryService;
